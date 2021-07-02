@@ -1,0 +1,28 @@
+---
+
+  # tahce pour tous
+
+- name: Update cache apt repo
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Upgrade packages
+  apt: upgrade=safe
+
+- name: Install common packages
+  apt:
+    pkg:
+      - git
+      - htop
+      - curl
+      - unzip
+      - iotop
+      - iftop
+      - sudo
+      - screen
+      - tree
+      - net-tools
+      - bash-completion
+      - gnupg
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
