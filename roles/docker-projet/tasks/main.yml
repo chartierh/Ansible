@@ -1,0 +1,79 @@
+---
+
+- name: Uninstall with pip if present docker-py
+  become: true
+  pip:
+    name: docker-py
+    state: absent
+- name: Install with pip docker
+  become: true
+  pip:
+    name: docker
+    state: present
+- name: Install with pip docker-compose
+  become: true
+  pip:
+    name: docker-compose
+    state: present
+
+- name: Deploy git project given in docker_url_projects
+  git:
+    repo: "{{ docker_url_project }}"
+    dest: "{{ docker_project }}"
+  # loop: "{{ lookup('dict', docker_url_projects) }}"
+  # with_items:
+  #   - "{{ docker_url_projects }}"
+
+- name: Copy sample.db.env to db.env
+  copy:
+    remote_src: yes
+    src: "{{ docker_project }}/sample.db.env"
+    dest: "{{ docker_project }}/db.env"
+
+- name: Copy sample.web.env to web.env
+  copy:
+    remote_src: yes
+    src: "{{ docker_project }}/sample.web.env"
+    dest: "{{ docker_project }}/web.env"
+
+- name: Copy source before docker-compose up
+  lineinfile:
+    path: "{{ docker_project }}/web.env"
+    regexp: '^HTTP_SRC_WWW='
+    line: 'HTTP_SRC_WWW=https://cesi.xila.me/common_src/datasets/commitstrip.zip'
+
+- name: Copy source before docker-compose up
+  lineinfile:
+    path: "{{ docker_project }}/web.env"
+    regexp: '^HTTP_SRC_SQL='
+    line: 'HTTP_SRC_SQL=https://cesi.xila.me/common_src/datasets/commitstrip.sql'
+- name: Create source folder
+  become: true
+  file:
+    path: /var/www/src
+    state: directory
+
+- name: Download web source
+  become: true
+  get_url:
+    url_username: hello
+    url_password: world
+    url: https://cesi.xila.me/common_src/datasets/commitstrip.zip
+    dest: "{{ docker_project }}/data/src/"
+- name: Download web source
+  become: true
+  get_url:
+    url_username: hello
+    url_password: world
+    url: https://cesi.xila.me/common_src/datasets/commitstrip.sql
+    dest: "{{ docker_project }}/data/src/"
+
+- name: Up these project
+  become: true
+  community.docker.docker_compose:
+    project_src: "{{ docker_project }}"
+  # loop: "{{ lookup('dict', docker_url_projects) }}"
+#   register: output
+#
+# - debug:
+#     var: output

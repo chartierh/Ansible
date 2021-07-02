@@ -1,0 +1,4 @@
+---
+# A list of project who will be cloned and run with docker-Compose
+docker_url_project: 'https://gitlab.com/toutainj/docker-lamp-exemple'
+docker_project: 'docker-lamp-exemple'
