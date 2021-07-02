@@ -1,0 +1,7 @@
+---
+
+- name: "Playbook déploiement docker"
+  hosts: infra1
+
+  roles:
+    - role: common
