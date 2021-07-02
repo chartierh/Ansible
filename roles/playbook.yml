@@ -4,4 +4,4 @@
 -  hosts: infra
 
   roles:
-    -role: common
+    - role: common
