@@ -1,14 +1,16 @@
 ---
-
-  # tahce pour tous
+  # tasks pour toutes les machines
 
 - name: Update cache apt repo
+  become: true
   apt: update_cache=yes cache_valid_time=3600
 
 - name: Upgrade packages
+  become: true
   apt: upgrade=safe
 
 - name: Install common packages
+  become: true
   apt:
     pkg:
       - git
