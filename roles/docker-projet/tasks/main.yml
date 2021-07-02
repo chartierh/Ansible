@@ -72,8 +72,3 @@
   become: true
   community.docker.docker_compose:
     project_src: "{{ docker_project }}"
-  # loop: "{{ lookup('dict', docker_url_projects) }}"
-#   register: output
-#
-# - debug:
-#     var: output
