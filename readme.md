@@ -10,7 +10,7 @@ Créer un playbook ansible qui déploiera sur 3 machines :
 
 ### Cloner le dépôt :
 
-<code>git clone https://gitlab.com/toutainj/ansible-docker-lamp-exemple.git</code>
+<code>git clone </code>
 
 ### Copier l'inventaire "modèle"
 
