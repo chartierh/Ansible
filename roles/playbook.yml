@@ -3,4 +3,4 @@
 - name: "playbook déploiement docker"
 -  hosts: infra
     roles:
-      - role: common
+      - common
